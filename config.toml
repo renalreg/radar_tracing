@@ -1,0 +1,147 @@
+[radar_trace_user]
+id = 2518
+
+[paths]
+tracing_inbox = "\\\\nbsvr325\\DBS2_DATA\\INBOX\\DBS\\DBS002"
+tracing_outbox = "\\\\nbsvr325\\DBS2_DATA\\OUTBOX\\DBS\\DBS002\\"
+
+[formatting]
+patients_per_file = 450000
+date_format = "%Y-%m-%d"
+
+[sheet_settings]
+# list of index numbers to reorder traced data
+order_for_tracing = [0, 3, 37, 35, 41, 39, 29, 33, 43, 55, 45, 47, 49, 51, 53]
+# list of index numbers for building lines
+basic_line = [0, 4, 5, 10, 1, -1, -1]
+audit_csv_headings = [
+    "Radar ID",
+    "NHS number",
+    "CHI number",
+    "HSC number",
+    "First name",
+    "Last name",
+    "Date of birth",
+    "Date of death",
+    "Gender",
+    "Postcode",
+    "Hospital",
+]
+audit_traced_headers = [
+    "Tracing code",
+    "NHS number traced",
+    "First name traced",
+    "Last name traced",
+    "Alias first name traced",
+    "Alias last name traced",
+    "Date of birth traced",
+    "Date of death traced",
+    "Gender traced",
+    "Postcode traced",
+    "Address 1",
+    "Address 2",
+    "Address 3",
+    "Address 4",
+    "Address 5",
+]
+tracing_columns = """
+    id,
+    nhs_no,
+    ,
+    ,
+    forename,
+    surname,
+    birth_date,
+    death_date,
+    sex,
+    postcode,
+    ,
+"""
+sheet_names = [
+    "NHS NUM DIFF",
+    "DOB DIFF",
+    "DOD DIFF",
+    "SEX DIFF",
+    "POSTCODE DIFF",
+    "NAME DIFF",
+]
+"nhs_num_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital",
+    "NHS number",
+    "CHI number",
+    "HSC number",
+    "", 
+    "", 
+    "Traced NHS number", 
+    "Comment",
+    ]
+"dob_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital", 
+    "NHS number",
+    "Date of birth", 
+    "", 
+    "", 
+    "Traced DOB", 
+    "Comment",
+    ]
+"dod_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital",
+    "NHS number", 
+    "Date of death", 
+    "", 
+    "", 
+    "Traced DOD", 
+    "Comment",
+    ]
+"sex_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital", 
+    "NHS number", 
+    "Gender", 
+    "", 
+    "",
+    "Traced gender", 
+    "Comment",
+    ]
+"postcode_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital", 
+    "NHS number", 
+    "Postcode", 
+    "", 
+    "", 
+    "Traced postcode", 
+    "Comment",
+    ]
+"name_diff" = [ 
+    "Radar ID", 
+    "First name", 
+    "Last name",
+    "Hospital", 
+    "NHS number", 
+    "", 
+    "", 
+    "Traced first name", 
+    "Traced last name", 
+    "Traced alias first name", 
+    "Traced alias last name", 
+    "Comment",
+    ]
+
+
+
+
+
