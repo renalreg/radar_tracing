@@ -4,6 +4,7 @@ import shutil
 import logging
 import toml
 import os
+import pymssql
 
 from dotenv import load_dotenv
 from datetime import datetime
@@ -25,12 +26,23 @@ logging.basicConfig(
 
 ### ----- DB Connection ----- ###
 
+LINUXRRSQLLIVE = os.environ.get("LINUXRRSQLLIVE")
+MSUSER = os.environ.get("MSUSER")
+MSPASSWORD = os.environ.get("MSPASSWORD")
+MSDATABASE = os.environ.get("MSDATABASE")
+MSHOST = os.environ.get("MSHOST")
+
+try:
+    rr_conn = pymssql.connect()
+    rr_cursor = rr_conn.cursor()
+except:
+    logging.info("Stage 1: Connection to RR unsuccessful")
+
 try:
     radar_conn = psycopg2.connect("")
     radar_cursor = radar_conn.cursor()
 except:
     logging.info("Stage 1: Connection to Radar unsuccessful")
-
 
 ### ----- Functions ----- ###
 
@@ -76,6 +88,9 @@ def get_patients():
                 patient_list[n] = item.replace(",", "")
         striped_radar_patients.append(patient_list)
 
+    radar_cursor.close()
+    radar_conn.close()
+
     return striped_radar_patients
 
 
@@ -94,13 +109,23 @@ def add_patients_to_audit_file(audit_file: str, radar_patients: list):
         tracing_writer.writerows(radar_patients)
 
 
+def get_request_number():
+
+    rr_cursor.execute("SELECT next value FOR SEQ_NHS_Tracing_Batch")
+    result = rr_cursor.fetchone()
+    rr_cursor.close()
+    rr_conn.close()
+
+    return result[0]
+
+
 if __name__ == "__main__":
     # Prepare audit file
     audit_file, trace_file = set_file_names()
     radar_patients = get_patients()
     add_patients_to_audit_file(audit_file, radar_patients)
     # Prepare trace file
-    request_number = adhoc.get_request_number()
+    request_number = get_request_number()
     column_map = adhoc.parse_columns(config["sheet_settings"]["tracing_columns"])
     reader = adhoc.create_reader(audit_file)
     adhoc.skip_header(reader)
