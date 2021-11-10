@@ -26,17 +26,24 @@ logging.basicConfig(
 
 ### ----- DB Connection ----- ###
 
-LINUXRRSQLLIVE = os.environ.get("LINUXRRSQLLIVE")
 MSUSER = os.environ.get("MSUSER")
 MSPASSWORD = os.environ.get("MSPASSWORD")
 MSDATABASE = os.environ.get("MSDATABASE")
 MSHOST = os.environ.get("MSHOST")
+MSSERVER = os.environ.get("MSSERVER")
 
 try:
-    rr_conn = pymssql.connect()
+    rr_conn = pymssql.connect(
+        host=MSHOST,
+        server=MSSERVER,
+        user=MSUSER,
+        password=MSPASSWORD,
+        database=MSDATABASE,
+    )
     rr_cursor = rr_conn.cursor()
 except:
     logging.info("Stage 1: Connection to RR unsuccessful")
+    raise
 
 try:
     radar_conn = psycopg2.connect("")
