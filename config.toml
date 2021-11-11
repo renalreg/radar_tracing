@@ -2,8 +2,8 @@
 id = 2518
 
 [paths]
-tracing_inbox = "/mnt/nhs-tracing/outbox"
-tracing_outbox = "/mnt/nhs-tracing/inbox"
+tracing_inbox = "/mnt/nhs-tracing/inbox"
+tracing_outbox = "/mnt/nhs-tracing/outbox"
 
 [formatting]
 patients_per_file = 450000
