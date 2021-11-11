@@ -2,8 +2,8 @@
 id = 2518
 
 [paths]
-tracing_inbox = "\\\\nbsvr325\\DBS2_DATA\\INBOX\\DBS\\DBS002"
-tracing_outbox = "\\\\nbsvr325\\DBS2_DATA\\OUTBOX\\DBS\\DBS002\\"
+tracing_inbox = "/mnt/nhs-tracing/outbox"
+tracing_outbox = "/mnt/nhs-tracing/inbox"
 
 [formatting]
 patients_per_file = 450000
