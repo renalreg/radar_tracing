@@ -8,7 +8,7 @@ greenlet==1.1.1
 importlib-metadata==4.6.3
 mypy-extensions==0.4.3
 -e git+https://${GITHUB_TOKEN}@github.com/renalreg/nhs_tracing.git@master#egg=nhs_tracing
-numpy==1.19.5
+numpy==1.22.0
 openpyxl==3.0.7
 pandas==1.1.5
 pathspec==0.9.0
