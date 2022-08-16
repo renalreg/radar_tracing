@@ -1,12 +1,14 @@
-import psycopg2
 import csv
-import shutil
 import logging
-import toml
 import os
 import re
+import shutil
 
+import toml
 from dotenv import load_dotenv
+from rr_connection_manager.classes.postgres_connection import \
+    PostgresConnection
+
 from classes.audit_book import Audit_workbook
 
 ### ----- Config ----- ###
@@ -26,8 +28,7 @@ logging.basicConfig(
 ### ----- DB Connection ----- ###
 
 try:
-    radar_conn = psycopg2.connect("")
-    radar_cursor = radar_conn.cursor()
+    radar_conn = PostgresConnection(app="radar_live", tunnel=True)
 except:
     logging.info("Stage 2: Connection to Radar unsuccessful")
 
@@ -270,7 +271,7 @@ def build_line(
 
 
 def update_dod(patient_id, dod):
-    radar_cursor.execute(
+    radar_conn.session.execute(
         dod_update_query, [dod, config["radar_trace_user"]["id"], patient_id]
     )
 

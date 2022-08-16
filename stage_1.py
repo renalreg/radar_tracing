@@ -1,14 +1,15 @@
-import psycopg2
 import csv
-import shutil
 import logging
-import toml
 import os
-import pymssql
-
-from dotenv import load_dotenv
+import shutil
 from datetime import datetime
+
+import pymssql
+import toml
+from dotenv import load_dotenv
 from nhs_tracing import adhoc
+from rr_connection_manager.classes.postgres_connection import \
+    PostgresConnection
 
 ### ----- Config ----- ###
 
@@ -46,8 +47,7 @@ except:
     raise
 
 try:
-    radar_conn = psycopg2.connect("")
-    radar_cursor = radar_conn.cursor()
+    radar_conn = PostgresConnection(app="radar_live", tunnel=True)
 except:
     logging.info("Stage 1: Connection to Radar unsuccessful")
 
@@ -84,8 +84,8 @@ def get_patients():
     tracing_query = query_file.read()
     query_file.close()
 
-    radar_cursor.execute(tracing_query)
-    radar_patients = radar_cursor.fetchall()
+    radar_conn.session.execute(tracing_query)
+    radar_patients = radar_conn.session.fetchall()
     striped_radar_patients = []
 
     for patient in radar_patients:
@@ -95,7 +95,6 @@ def get_patients():
                 patient_list[n] = item.replace(",", "")
         striped_radar_patients.append(patient_list)
 
-    radar_cursor.close()
     radar_conn.close()
 
     return striped_radar_patients
